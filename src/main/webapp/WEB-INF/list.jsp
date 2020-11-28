@@ -5,13 +5,15 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>Web application test page</title>
+	<title>Shoppinglist</title>
 	<link rel="stylesheet" href="/styles/demo.css">
 </head>
 
 <body>
+<h1>List of items to shop</h1>
 
-	<h1>${ aikaEro } days until Christmas!</h1>
+
+	
 
 </body>
 </html>

@@ -14,6 +14,11 @@ public class ShoppingListItem {
 		this.ostos = ostos;
 	}
 
+	public ShoppingListItem(String ostos) {
+		super();
+		this.ostos = ostos;
+	}
+	
 	public int getId() {
 		return id;
 	}
