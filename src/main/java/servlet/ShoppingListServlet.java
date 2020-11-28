@@ -14,17 +14,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import database.JDBCShoppingListItemDao;
+
 @WebServlet("/shoppinglist")
 public class ShoppingListServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     
-    	List<ShoppingListItem> items = new ArrayList<ShoppingListItem>();
-        ShoppingListItem eggs = new ShoppingListItem("Eggs");
-        ShoppingListItem butter = new ShoppingListItem("Butter");
-        items.add(eggs);
-        items.add(butter);
+
+		JDBCShoppingListItemDao dao = new JDBCShoppingListItemDao();
+		System.out.println("Shopping list contents:");
+		List<ShoppingListItem> items = dao.getAllItems();
+        
+        
         
         // lähetetään aika merkkijono JSP-sivulle attribuuttina
         req.setAttribute("shoppingitems", items);
