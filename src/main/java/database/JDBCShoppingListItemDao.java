@@ -12,26 +12,12 @@ import model.ShoppingListItem;
 
 public class JDBCShoppingListItemDao implements ShoppingListItemDao {
 
-	private static final String URL = "jdbc:sqlite:.\\shoppinglist.sqlite";
-
-	public Connection connect() {
-		Connection connection = null;
-		try {
-			Class.forName("org.sqlite.JDBC");
-			connection = DriverManager.getConnection(URL);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return connection;
-	}
-
 	@Override
 	public List<ShoppingListItem> getAllItems() {
 		List<ShoppingListItem> items = new ArrayList<ShoppingListItem>();
+		Database database = new Database();
+		Connection connection = database.connect();
 		try {
-			Class.forName("org.sqlite.JDBC");
-			Connection connection = DriverManager.getConnection(URL);
 			PreparedStatement statement = connection.prepareStatement("SELECT * FROM ShoppingListItem");
 			ResultSet results = statement.executeQuery();
 
@@ -55,9 +41,9 @@ public class JDBCShoppingListItemDao implements ShoppingListItemDao {
 	@Override
 	public ShoppingListItem getItem(long id) {
 		ShoppingListItem item = new ShoppingListItem();
+		Database database = new Database();
+		Connection connection = database.connect();
 		try {
-			Class.forName("org.sqlite.JDBC");
-			Connection connection = DriverManager.getConnection(URL);
 			PreparedStatement statement = connection.prepareStatement("SELECT * FROM ShoppingListItem");
 			ResultSet results = statement.executeQuery();
 
@@ -80,10 +66,9 @@ public class JDBCShoppingListItemDao implements ShoppingListItemDao {
 
 	@Override
 	public boolean addItem(ShoppingListItem newItem) {
-
+		Database database = new Database();
+		Connection connection = database.connect();
 		try {
-			Class.forName("org.sqlite.JDBC");
-			Connection connection = DriverManager.getConnection(URL);
 			PreparedStatement statement = connection.prepareStatement("INSERT INTO ShoppingListItem(title) VALUES (?)",
 					Statement.RETURN_GENERATED_KEYS);
 
@@ -109,10 +94,10 @@ public class JDBCShoppingListItemDao implements ShoppingListItemDao {
 
 	@Override
 	public boolean removeItem(ShoppingListItem item) {
+		Database database = new Database();
+		Connection connection = database.connect();
 		int deletedId = 0;
 		try {
-			Class.forName("org.sqlite.JDBC");
-			Connection connection = DriverManager.getConnection(URL);
 			PreparedStatement statement = connection
 					.prepareStatement("SELECT * FROM ShoppingListItem WHERE title LIKE(?)");
 			statement.setString(1, item.getOstos());
@@ -131,8 +116,6 @@ public class JDBCShoppingListItemDao implements ShoppingListItemDao {
 		}
 
 		try {
-			Class.forName("org.sqlite.JDBC");
-			Connection connection = DriverManager.getConnection(URL);
 			PreparedStatement statement = connection.prepareStatement("DELETE FROM ShoppingListItem WHERE id = ?");
 			statement.setInt(1, deletedId);
 			statement.executeUpdate();
@@ -147,7 +130,4 @@ public class JDBCShoppingListItemDao implements ShoppingListItemDao {
 		}
 		return true;
 	}
-
-
-
 }
