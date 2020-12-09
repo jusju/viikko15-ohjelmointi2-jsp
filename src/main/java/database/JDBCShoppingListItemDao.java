@@ -40,15 +40,20 @@ public class JDBCShoppingListItemDao implements ShoppingListItemDao {
 
 	@Override
 	public ShoppingListItem getItem(long id) {
+		System.out.println("LONGID: " + id);
 		ShoppingListItem item = new ShoppingListItem();
 		Database database = new Database();
 		Connection connection = database.connect();
+		int intId = Integer.parseInt((id + ""));
+		System.out.println("JUKKA " + intId);
 		try {
 			PreparedStatement statement = connection.prepareStatement("SELECT * FROM ShoppingListItem");
 			ResultSet results = statement.executeQuery();
 
 			while (results.next()) {
-				if (id == results.getInt("id")) {
+				System.out.println("JUKKA " + results.getInt("id"));
+				if (intId == results.getInt("id")) {
+					System.out.println("LÖYTYI");
 					item.setId(results.getInt("id"));
 					item.setOstos(results.getString("title"));
 				}
@@ -114,7 +119,8 @@ public class JDBCShoppingListItemDao implements ShoppingListItemDao {
 			e.printStackTrace();
 			return false;
 		}
-
+		database = new Database();
+		connection = database.connect();
 		try {
 			PreparedStatement statement = connection.prepareStatement("DELETE FROM ShoppingListItem WHERE id = ?");
 			statement.setInt(1, deletedId);

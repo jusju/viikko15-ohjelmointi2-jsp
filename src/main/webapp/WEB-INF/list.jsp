@@ -7,16 +7,20 @@
 <head>
 	<meta charset="utf-8">
 	<title>Shoppinglist</title>
+	<script src="/js/app.js"></script>
 	<link rel="stylesheet" href="/styles/demo.css">
 </head>
 
 <body>
 <h1>List of items to shop</h1>
 
-<c:forEach items="${shoppingitems}" var="item">   
-	<c:out value="${item.ostos}"/><br/>
-</c:forEach> 
+	<ul>
+		<c:forEach items="${ shoppingitems }" var="shoppingListItem">
+			<li id="product-${ shoppingListItem.getId() }"><c:out value="${ shoppingListItem.getOstos() }" />
+				<button onclick="removeProduct(${ shoppingListItem.getId() })">Remove</button>
+			</li>
+		</c:forEach>
+	</ul>
 	
-
 </body>
 </html>
