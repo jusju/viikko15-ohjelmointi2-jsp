@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import database.JDBCShoppingListItemDao;
 import model.ShoppingListItem;
 
@@ -23,8 +25,14 @@ public class DeleteShoppingListItem extends HttpServlet {
     	System.out.println(id);
     	ShoppingListItem item = dao.getItem(Long.parseLong(id));
     	dao.removeItem(item);
+
+        String json = new Gson().toJson(item);
+
+        resp.setContentType("application/json; charset=UTF-8");
+        resp.getWriter().println(json);
     	
-        // lähetä request edelleen index.jsp sivulle
-        req.getRequestDispatcher("/WEB-INF/list.jsp").forward(req, resp);
     }
+    
+
+    
 }
